@@ -1,20 +1,18 @@
 /*
-GanttProject is an opensource project management tool.
-Copyright (C) 2002-2010 Alexandre Thomas, Dmitry Barashev
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 3
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * GanttProject is an opensource project management tool. Copyright (C) 2002-2010 Alexandre Thomas,
+ * Dmitry Barashev
+ * 
+ * This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation; either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with this program; if
+ * not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
  */
 package net.sourceforge.ganttproject.task;
 
@@ -45,8 +43,7 @@ public interface Task extends MutableTask {
     }
 
     /**
-     * @return the Priority value for the given integer value, or
-     *         DEFAULT_PRIORITY if unknown
+     * @return the Priority value for the given integer value, or DEFAULT_PRIORITY if unknown
      */
     public static Priority getPriority(int value) {
       for (Task.Priority p : Task.Priority.values()) {
@@ -93,11 +90,17 @@ public interface Task extends MutableTask {
 
   public static interface Cost {
     BigDecimal getValue();
+
     BigDecimal getManualValue();
+
     BigDecimal getCalculatedValue();
+
     void setValue(Cost copy);
+
     void setValue(BigDecimal value);
+
     boolean isCalculated();
+
     void setCalculated(boolean calculated);
   }
 
@@ -121,6 +124,7 @@ public interface Task extends MutableTask {
   GanttCalendar getStart();
 
   GanttCalendar getDisplayEnd();
+
   GanttCalendar getEnd();
 
   TimeDuration getDuration();
@@ -132,8 +136,8 @@ public interface Task extends MutableTask {
   ShapePaint getShape();
 
   /**
-   * @return a color representing this Task (could be a custom color, milestone
-   *         color, super task color or default color)
+   * @return a color representing this Task (could be a custom color, milestone color, super task
+   *         color or default color)
    */
   Color getColor();
 
@@ -179,6 +183,14 @@ public interface Task extends MutableTask {
 
   void setThirdDateConstraint(int dateConstraint);
 
+  double getWorkLoad();
+  
+  boolean getIsWorkLoadFixed();
+
+  void setWorkLoad(double workLoad);
+  
+  void setWorkLoadFixed(boolean isFixed);
+  
   TaskInfo getTaskInfo();
 
   boolean isProjectTask();
@@ -186,15 +198,9 @@ public interface Task extends MutableTask {
   boolean isSupertask();
 
   List<Document> getAttachments();
-  
+
   public static interface Load {
-	    Double getValue();
-	    //Double getManualValue();
-	    //Double getCalculatedValue();
-	    void setValue(Load copy);
-	    //void setValue(double value);
-	    //boolean isCalculated();
-	    //void setCalculated(boolean calculated);
+    Double getValue();
   }
 
   Load getLoad();

@@ -103,6 +103,8 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   private JCheckBox projectTaskCheckBox1;
 
+  private JCheckBox myFixedWorkLoadEnabled;
+  
   /** Shape chooser combo Box */
   private JPaintCombo shapeComboBox;
 
@@ -135,6 +137,10 @@ public class GanttTaskPropertiesBean extends JPanel {
   private Task.Priority originalPriority;
 
   private ShapePaint originalShape;
+  
+  private boolean originalIsWorkLoadFixed;
+  
+  private double originalWorkLoad;
 
   private final TaskScheduleDatesPanel myTaskScheduleDates;
 
@@ -155,6 +161,7 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   private JCheckBox myShowInTimeline;
   private AbstractAction myOnEarliestBeginToggle;
+  private double myWorkLoad;
 
   public GanttTaskPropertiesBean(GanttTask[] selectedTasks, IGanttProject project, UIFacade uifacade) {
     myTaskScheduleDates = new TaskScheduleDatesPanel(uifacade);
@@ -209,7 +216,7 @@ public class GanttTaskPropertiesBean extends JPanel {
 
     addEmptyRow(propertiesPanel);
 
-    propertiesPanel.add(new JLabel(language.getText("option.taskProperties.main.showInTimeline.label")));
+    propertiesPanel.add(new JLabel(language.getText("option.taskProperties.load.calculated.label")));
     myShowInTimeline = new JCheckBox();
     propertiesPanel.add(myShowInTimeline);
 
@@ -408,6 +415,10 @@ public class GanttTaskPropertiesBean extends JPanel {
           || originalEarliestBeginEnabled != getThirdDateConstraint()) {
         mutator.setThird(getThird(), getThirdDateConstraint());
       }
+      
+      if (originalIsWorkLoadFixed != getWorkLoadIsFixed() || originalWorkLoad != getWorkLoad()) {
+        mutator.setFixedWorkLoad(getWorkLoad(), getWorkLoadIsFixed());
+      }
 
       if (getLength() > 0) {
         mutator.setDuration(selectedTasks[i].getManager().createLength(getLength()));
@@ -439,6 +450,14 @@ public class GanttTaskPropertiesBean extends JPanel {
         myUIfacade.getCurrentTaskView().getTimelineTasks().add(selectedTasks[i]);
       }
     }
+  }
+
+  private boolean getWorkLoadIsFixed() {
+    return myFixedWorkLoadEnabled.isSelected();
+  }
+
+  private double getWorkLoad() {
+    return myWorkLoad;
   }
 
   private void setSelectedTaskProperties() {
@@ -487,6 +506,9 @@ public class GanttTaskPropertiesBean extends JPanel {
     noteAreaNotes.setText(originalNotes);
     myTaskColorOption.setValue(selectedTasks[0].getColor());
     myShowInTimeline.setSelected(myUIfacade.getCurrentTaskView().getTimelineTasks().contains(selectedTasks[0]));
+    
+    myWorkLoad = originalWorkLoad;
+    myFixedWorkLoadEnabled.setSelected(originalIsWorkLoadFixed);
   }
 
 
@@ -563,6 +585,8 @@ public class GanttTaskPropertiesBean extends JPanel {
     originalEarliestBeginDate = task.getThird();
     originalEarliestBeginEnabled = task.getThirdDateConstraint();
     originalIsProjectTask = task.isProjectTask();
+    originalWorkLoad = task.getWorkLoad();
+    originalIsWorkLoadFixed = task.getIsWorkLoadFixed();
   }
 
   private boolean canBeProjectTask(Task testedTask, TaskContainmentHierarchyFacade taskHierarchy) {

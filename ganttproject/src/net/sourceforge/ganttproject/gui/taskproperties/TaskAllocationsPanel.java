@@ -128,17 +128,20 @@ public class TaskAllocationsPanel {
 
   private JComponent createLoadPanel() {
     myLoadValue.setWritable(false);
+    myLoadValue.setValue(myTask.getLoad().getValue());
 
-	    OptionsPageBuilder builder = new OptionsPageBuilder();
+    OptionsPageBuilder builder = new OptionsPageBuilder();
 
-	    JPanel optionsPanel = new JPanel();
-	    optionsPanel.add(new JLabel(myTask.getLoad().getValue().toString()));
+    JPanel optionsPanel = new JPanel();
+    optionsPanel.add(new JLabel(builder.getI18N().getCanonicalOptionLabelKey(myLoadValue)));
+    optionsPanel.add(builder.createOptionComponent(myLoadGroup, myLoadValue));
+    OptionsPageBuilder.TWO_COLUMN_LAYOUT.layout(optionsPanel, 2);
 
-	    UIUtil.createTitle(optionsPanel, builder.getI18N().getOptionGroupLabel(myLoadGroup));
+    UIUtil.createTitle(optionsPanel, builder.getI18N().getOptionGroupLabel(myLoadGroup));
 
-	    JPanel result = new JPanel(new BorderLayout());
-	    result.add(optionsPanel, BorderLayout.NORTH);
-	    return result;
+    JPanel result = new JPanel(new BorderLayout());
+    result.add(optionsPanel, BorderLayout.NORTH);
+    return result;
   }
 
   public void commit() {
