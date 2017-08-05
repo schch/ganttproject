@@ -1,19 +1,20 @@
 /*
- * GanttProject is an opensource project management tool. License: GPL3 Copyright
- * (C) 2010 Dmitry Barashev
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin
- * Street, Fifth Floor, Boston, MA 02110-1301, USA.
+GanttProject is an opensource project management tool. License: GPL3
+Copyright (C) 2010 Dmitry Barashev
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 3
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package net.sourceforge.ganttproject.gui.taskproperties;
 
@@ -35,8 +36,8 @@ import java.awt.*;
 import java.math.BigDecimal;
 
 /**
- * UI component in a task properties dialog: a table with resources assigned to a
- * task.
+ * UI component in a task properties dialog: a table with resources assigned to
+ * a task.
  *
  * @author dbarashev (Dmitry Barashev)
  */
@@ -45,30 +46,23 @@ public class TaskAllocationsPanel {
   private final HumanResourceManager myHRManager;
   private final RoleManager myRoleManager;
   private final Task myTask;
-  private final DefaultBooleanOption myCostIsCalculated =
-          new DefaultBooleanOption("taskProperties.cost.calculated");
-  private final DefaultDoubleOption myCostValue =
-          new DefaultDoubleOption("taskProperties.cost.value") {
+  private final DefaultBooleanOption myCostIsCalculated = new DefaultBooleanOption("taskProperties.cost.calculated");
+  private final DefaultDoubleOption myCostValue = new DefaultDoubleOption("taskProperties.cost.value") {
 
-            @Override
-            public void setValue(Double value) {
-              // TODO Auto-generated method stub
-              super.setValue(value);
-            }
+    @Override
+    public void setValue(Double value) {
+      // TODO Auto-generated method stub
+      super.setValue(value);
+    }
 
-          };
-  private final GPOptionGroup myCostGroup =
-          new GPOptionGroup("task.cost", myCostIsCalculated, myCostValue);
+  };
+  private final GPOptionGroup myCostGroup = new GPOptionGroup("task.cost", myCostIsCalculated, myCostValue);
 
-  private final DefaultDoubleOption myLoadValue =
-          new DefaultDoubleOption("taskProperties.load.value");
-  private final GPOptionGroup myLoadGroup =
-          new GPOptionGroup("task.load", myLoadValue);
+  private final GPOptionGroup myLoadGroup = new GPOptionGroup("task.load");
 
   private JTable myTable;
 
-  public TaskAllocationsPanel(Task task, HumanResourceManager hrManager,
-          RoleManager roleMgr) {
+  public TaskAllocationsPanel(Task task, HumanResourceManager hrManager, RoleManager roleMgr) {
     myHRManager = hrManager;
     myRoleManager = roleMgr;
     myTask = task;
@@ -82,14 +76,11 @@ public class TaskAllocationsPanel {
     myModel = new ResourcesTableModel(myTask.getAssignmentCollection());
     myTable = new JTable(myModel);
     UIUtil.setupTableUI(getTable());
-    CommonPanel.setupComboBoxEditor(getTable().getColumnModel().getColumn(1),
-            myHRManager.getResources().toArray());
-    CommonPanel.setupComboBoxEditor(getTable().getColumnModel().getColumn(4),
-            myRoleManager.getEnabledRoles());
+    CommonPanel.setupComboBoxEditor(getTable().getColumnModel().getColumn(1), myHRManager.getResources().toArray());
+    CommonPanel.setupComboBoxEditor(getTable().getColumnModel().getColumn(4), myRoleManager.getEnabledRoles());
 
     JPanel tablePanel = CommonPanel.createTableAndActions(myTable, myModel);
-    String layoutDef =
-            "(ROW weight=1.0 (LEAF name=resources weight=0.5) (COLUMN weight=0.5 (LEAF name=cost weight=0.5) (LEAF name=load weight=0.5)))";
+    String layoutDef = "(ROW weight=1.0 (LEAF name=resources weight=0.5) (COLUMN weight=0.5 (LEAF name=cost weight=0.5) (LEAF name=load weight=0.5)))";
 
     JXMultiSplitPane result = new JXMultiSplitPane();
     result.setDividerSize(0);
@@ -115,27 +106,19 @@ public class TaskAllocationsPanel {
     myCostValue.setWritable(!myCostIsCalculated.isChecked());
 
     OptionsPageBuilder builder = new OptionsPageBuilder();
-    BooleanOptionRadioUi radioUi =
-            OptionsPageBuilder.createBooleanOptionRadioUi(myCostIsCalculated);
+    BooleanOptionRadioUi radioUi = OptionsPageBuilder.createBooleanOptionRadioUi(myCostIsCalculated);
 
     JPanel optionsPanel = new JPanel();
     optionsPanel.add(radioUi.getYesButton());
-    optionsPanel.add(
-            new JLabel(myTask.getCost().getCalculatedValue().toPlainString()));
+    optionsPanel.add(new JLabel(myTask.getCost().getCalculatedValue().toPlainString()));
     optionsPanel.add(radioUi.getNoButton());
     optionsPanel.add(builder.createOptionComponent(myCostGroup, myCostValue));
     OptionsPageBuilder.TWO_COLUMN_LAYOUT.layout(optionsPanel, 2);
 
-    final String yesLabelKey =
-            builder.getI18N().getCanonicalOptionLabelKey(myCostIsCalculated)
-                    + ".yes";
-    radioUi.getYesButton()
-            .setText(GanttLanguage.getInstance().getText(yesLabelKey));
-    radioUi.getNoButton().setText(GanttLanguage.getInstance().getText(
-            builder.getI18N().getCanonicalOptionLabelKey(myCostIsCalculated)
-                    + ".no"));
-    UIUtil.createTitle(optionsPanel,
-            builder.getI18N().getOptionGroupLabel(myCostGroup));
+    final String yesLabelKey = builder.getI18N().getCanonicalOptionLabelKey(myCostIsCalculated) + ".yes";
+    radioUi.getYesButton().setText(GanttLanguage.getInstance().getText(yesLabelKey));
+    radioUi.getNoButton().setText(GanttLanguage.getInstance().getText(builder.getI18N().getCanonicalOptionLabelKey(myCostIsCalculated) + ".no"));
+    UIUtil.createTitle(optionsPanel, builder.getI18N().getOptionGroupLabel(myCostGroup));
 
     JPanel result = new JPanel(new BorderLayout());
     result.add(optionsPanel, BorderLayout.NORTH);
@@ -143,19 +126,14 @@ public class TaskAllocationsPanel {
   }
 
   private JComponent createLoadPanel() {
-    myLoadValue.setWritable(false);
-    myLoadValue.setValue(myTask.getLoad().getValue());
-
     OptionsPageBuilder builder = new OptionsPageBuilder();
 
     JPanel optionsPanel = new JPanel();
-    optionsPanel.add(new JLabel(
-            builder.getI18N().getOptionLabel(myLoadGroup, myLoadValue)));
-    optionsPanel.add(builder.createOptionComponent(myLoadGroup, myLoadValue));
+    optionsPanel.add(new JLabel(GanttLanguage.getInstance().getText("option.taskProperties.load.value.label")));
+    optionsPanel.add(new JLabel(myTask.getLoad().getValue().toString()));
     OptionsPageBuilder.TWO_COLUMN_LAYOUT.layout(optionsPanel, 1);
 
-    UIUtil.createTitle(optionsPanel,
-            builder.getI18N().getOptionGroupLabel(myLoadGroup));
+    UIUtil.createTitle(optionsPanel, builder.getI18N().getOptionGroupLabel(myLoadGroup));
 
     JPanel result = new JPanel(new BorderLayout());
     result.add(optionsPanel, BorderLayout.NORTH);

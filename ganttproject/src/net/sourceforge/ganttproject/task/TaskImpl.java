@@ -1,17 +1,20 @@
 /*
- * GanttProject is an opensource project management tool. Copyright (C) 2004-2011 GanttProject Team
- * 
- * This program is free software; you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation; either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program; if
- * not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301, USA.
+GanttProject is an opensource project management tool.
+Copyright (C) 2004-2011 GanttProject Team
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 3
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package net.sourceforge.ganttproject.task;
 
@@ -148,14 +151,10 @@ public class TaskImpl implements Task {
     myManager = taskManager;
     myID = taskID;
 
-    myAssignments =
-        new ResourceAssignmentCollectionImpl(this, myManager.getConfig().getResourceManager());
-    myDependencySlice = new TaskDependencySliceImpl(this, myManager.getDependencyCollection(),
-        TaskDependencySlice.COMPLETE_SLICE_FXN);
-    myDependencySliceAsDependant =
-        new TaskDependencySliceAsDependant(this, myManager.getDependencyCollection());
-    myDependencySliceAsDependee =
-        new TaskDependencySliceAsDependee(this, myManager.getDependencyCollection());
+    myAssignments = new ResourceAssignmentCollectionImpl(this, myManager.getConfig().getResourceManager());
+    myDependencySlice = new TaskDependencySliceImpl(this, myManager.getDependencyCollection(), TaskDependencySlice.COMPLETE_SLICE_FXN);
+    myDependencySliceAsDependant = new TaskDependencySliceAsDependant(this, myManager.getDependencyCollection());
+    myDependencySliceAsDependee = new TaskDependencySliceAsDependee(this, myManager.getDependencyCollection());
     myPriority = DEFAULT_PRIORITY;
     myTaskHierarchyItem = myManager.getHierarchyManager().createItem(this);
     myNotes = "";
@@ -176,8 +175,7 @@ public class TaskImpl implements Task {
     } else {
       myTaskHierarchyItem = copy.myTaskHierarchyItem;
     }
-    myAssignments =
-        new ResourceAssignmentCollectionImpl(this, myManager.getConfig().getResourceManager());
+    myAssignments = new ResourceAssignmentCollectionImpl(this, myManager.getConfig().getResourceManager());
     myAssignments.importData(copy.getAssignmentCollection());
     myName = copy.myName;
     myWebLink = copy.myWebLink;
@@ -198,12 +196,9 @@ public class TaskImpl implements Task {
     bExpand = copy.bExpand;
     myCost.setValue(copy.myCost);
 
-    myDependencySlice = new TaskDependencySliceImpl(this, myManager.getDependencyCollection(),
-        TaskDependencySlice.COMPLETE_SLICE_FXN);
-    myDependencySliceAsDependant =
-        new TaskDependencySliceAsDependant(this, myManager.getDependencyCollection());
-    myDependencySliceAsDependee =
-        new TaskDependencySliceAsDependee(this, myManager.getDependencyCollection());
+    myDependencySlice = new TaskDependencySliceImpl(this, myManager.getDependencyCollection(), TaskDependencySlice.COMPLETE_SLICE_FXN);
+    myDependencySliceAsDependant = new TaskDependencySliceAsDependant(this, myManager.getDependencyCollection());
+    myDependencySliceAsDependee = new TaskDependencySliceAsDependee(this, myManager.getDependencyCollection());
 
     customValues = (CustomColumnsValues) copy.getCustomValues().clone();
 
@@ -347,7 +342,8 @@ public class TaskImpl implements Task {
         }
 
         @Override
-        public void write() throws IOException {}
+        public void write() throws IOException {
+        }
       });
     }
     return Collections.emptyList();
@@ -404,8 +400,8 @@ public class TaskImpl implements Task {
       }
       if (!allMilestones) {
         GPLogger.getLogger(Task.class).warning(String.format(
-            "This is probably a bug. Task #%d (%s) has end date=%s equal to start date."
-                + "It could be possible if all child tasks were milestones, however they are not. Child tasks: %s",
+            "This is probably a bug. Task #%d (%s) has end date=%s equal to start date." +
+            "It could be possible if all child tasks were milestones, however they are not. Child tasks: %s",
             getTaskID(), getName(), modelEnd, Arrays.asList(deepNestedTasks)));
       }
       return modelEnd;
@@ -450,15 +446,13 @@ public class TaskImpl implements Task {
     if (isMilestone()) {
       return EMPTY_DURATION;
     }
-    return (myMutator != null && myMutator.myIsolationLevel == TaskMutator.READ_UNCOMMITED)
-        ? myMutator.getDuration()
+    return (myMutator != null && myMutator.myIsolationLevel == TaskMutator.READ_UNCOMMITED) ? myMutator.getDuration()
         : myLength;
   }
 
   @Override
   public int getCompletionPercentage() {
-    return (myMutator != null && myMutator.myIsolationLevel == TaskMutator.READ_UNCOMMITED)
-        ? myMutator.getCompletionPercentage()
+    return (myMutator != null && myMutator.myIsolationLevel == TaskMutator.READ_UNCOMMITED) ? myMutator.getCompletionPercentage()
         : myCompletionPercentage;
   }
 
@@ -676,8 +670,7 @@ public class TaskImpl implements Task {
       if (myStartChange != null && TaskImpl.this.isSupertask()) {
         TaskImpl.this.adjustNestedTasks();
       }
-      if ((myStartChange != null || myEndChange != null || myDurationChange != null
-          || myShiftChange != null || myThirdChange != null) && areEventsEnabled()) {
+      if ((myStartChange != null || myEndChange != null || myDurationChange != null || myShiftChange != null || myThirdChange != null) && areEventsEnabled()) {
         GanttCalendar oldStart;
         if (myStartChange != null) {
           oldStart = (GanttCalendar) myStartChange.myOldValue;
@@ -689,7 +682,7 @@ public class TaskImpl implements Task {
         GanttCalendar oldEnd;
         if (myEndChange != null) {
           oldEnd = (GanttCalendar) myEndChange.myOldValue;
-        } else if (myShiftChange != null) {
+        } else if (myShiftChange != null){
           oldEnd = (GanttCalendar) myShiftChange.second().myOldValue;
         } else {
           oldEnd = TaskImpl.this.getEnd();
@@ -699,15 +692,14 @@ public class TaskImpl implements Task {
     }
 
     public GanttCalendar getThird() {
-      return myThirdChange == null ? TaskImpl.this.myThird
-          : (GanttCalendar) myThirdChange.myFieldValue;
+      return myThirdChange == null ? TaskImpl.this.myThird : (GanttCalendar) myThirdChange.myFieldValue;
     }
 
     public List<TaskActivity> getActivities() {
       if (myActivities == null && (myStartChange != null) || (myDurationChange != null)) {
         myActivities = new ArrayList<TaskActivity>();
-        TaskImpl.recalculateActivities(myManager.getConfig().getCalendar(), TaskImpl.this,
-            myActivities, getStart().getTime(), TaskImpl.this.getEnd().getTime());
+        TaskImpl.recalculateActivities(myManager.getConfig().getCalendar(), TaskImpl.this, myActivities,
+            getStart().getTime(), TaskImpl.this.getEnd().getTime());
       }
       return myActivities;
     }
@@ -906,8 +898,7 @@ public class TaskImpl implements Task {
     }
 
     GanttCalendar getStart() {
-      return myStartChange == null ? TaskImpl.this.myStart
-          : (GanttCalendar) myStartChange.myFieldValue;
+      return myStartChange == null ? TaskImpl.this.myStart : (GanttCalendar) myStartChange.myFieldValue;
     }
 
     GanttCalendar getEnd() {
@@ -915,8 +906,7 @@ public class TaskImpl implements Task {
     }
 
     TimeDuration getDuration() {
-      return myDurationChange == null ? TaskImpl.this.myLength
-          : (TimeDuration) myDurationChange.myFieldValue;
+      return myDurationChange == null ? TaskImpl.this.myLength : (TimeDuration) myDurationChange.myFieldValue;
     }
 
     @Override
@@ -965,12 +955,12 @@ public class TaskImpl implements Task {
     public void setTaskInfo(TaskInfo taskInfo) {
       myTaskInfo = taskInfo;
     }
-   
+
     public double getWorkLoad() {
       return myWorkLoadChange == null ? TaskImpl.this.myWorkLoad
-          : (double) myWorkLoadChange.myFieldValue;    
+          : (double) myWorkLoadChange.myFieldValue;
     }
-    
+
     @Override
     public void setFixedWorkLoad(final double workLoad, final boolean isFixed) {
       myCommands.add(new Runnable() {
@@ -1083,15 +1073,13 @@ public class TaskImpl implements Task {
         // clone.setDuration(length);
         newStart = RESTLESS_CALENDAR.shiftDate(myStart.getTime(), length);
         if (0 == (getManager().getCalendar().getDayMask(newStart) & DayMask.WORKING)) {
-          newStart = getManager().getCalendar().findClosest(newStart, myLength.getTimeUnit(),
-              MoveDirection.FORWARD, DayType.WORKING);
+          newStart = getManager().getCalendar().findClosest(newStart, myLength.getTimeUnit(), MoveDirection.FORWARD, DayType.WORKING);
         }
       } else {
         newStart = RESTLESS_CALENDAR.shiftDate(clone.getStart().getTime(),
             getManager().createLength(clone.getDuration().getTimeUnit(), (long) unitCount));
         if (0 == (getManager().getCalendar().getDayMask(newStart) & DayMask.WORKING)) {
-          newStart = getManager().getCalendar().findClosest(newStart, myLength.getTimeUnit(),
-              MoveDirection.BACKWARD, DayType.WORKING);
+          newStart = getManager().getCalendar().findClosest(newStart, myLength.getTimeUnit(), MoveDirection.BACKWARD, DayType.WORKING);
         }
       }
       clone.setStart(CalendarFactory.createGanttCalendar(newStart));
@@ -1128,8 +1116,7 @@ public class TaskImpl implements Task {
     if (duration.getTimeUnit().isConstructedFrom(myLength.getTimeUnit())) {
       return duration.getValue() * duration.getTimeUnit().getAtomCount(myLength.getTimeUnit());
     }
-    throw new RuntimeException(
-        "Can't translate duration=" + duration + " into units=" + myLength.getTimeUnit());
+    throw new RuntimeException("Can't translate duration=" + duration + " into units=" + myLength.getTimeUnit());
   }
 
   private void recalculateActivities() {
@@ -1150,8 +1137,7 @@ public class TaskImpl implements Task {
       return;
     }
 
-    recalculateActivities(myManager.getConfig().getCalendar(), this, myActivities, startDate,
-        endDate);
+    recalculateActivities(myManager.getConfig().getCalendar(), this, myActivities, startDate, endDate);
     int length = 0;
     for (TaskActivity activity : myActivities) {
       if (activity.getIntensity() > 0) {
@@ -1161,8 +1147,8 @@ public class TaskImpl implements Task {
     myLength = getManager().createLength(myLength.getTimeUnit(), length);
   }
 
-  private static void recalculateActivities(GPCalendarCalc calendar, Task task,
-      List<TaskActivity> output, Date startDate, Date endDate) {
+  private static void recalculateActivities(GPCalendarCalc calendar, Task task, List<TaskActivity> output, Date startDate,
+      Date endDate) {
     TaskActivitiesAlgorithm alg = new TaskActivitiesAlgorithm(calendar);
     alg.recalculateActivities(task, output, startDate, endDate);
   }
@@ -1260,15 +1246,14 @@ public class TaskImpl implements Task {
   // parts of code to be sure that constraint fulfills
   @Override
   public void applyThirdDateConstraint() {
-    // if (getThird() != null)
-    // switch (getThirdDateConstraint()) {
-    // case EARLIESTBEGIN:
-    // if (getThird().after(getStart())) {
-    // shift(myManager.getTimeUnitStack().createDuration(getDuration().getTimeUnit(),
-    // getStart().getTime(), getThird().getTime()));
-    // }
-    // break;
-    // }
+//    if (getThird() != null)
+//      switch (getThirdDateConstraint()) {
+//      case EARLIESTBEGIN:
+//        if (getThird().after(getStart())) {
+//          shift(myManager.getTimeUnitStack().createDuration(getDuration().getTimeUnit(), getStart().getTime(), getThird().getTime()));
+//        }
+//        break;
+//      }
   }
 
   private TaskInfo myTaskInfo;

@@ -1,19 +1,20 @@
 /*
- * GanttProject is an opensource project management tool. Copyright (C) 2011
- * GanttProject team
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 3 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- * PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 51 Franklin
- * Street, Fifth Floor, Boston, MA 02110-1301, USA.
+GanttProject is an opensource project management tool.
+Copyright (C) 2011 GanttProject team
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 3
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package net.sourceforge.ganttproject.gui;
 
@@ -106,12 +107,12 @@ public class GanttTaskPropertiesBean extends JPanel {
   private JCheckBox mileStoneCheckBox1;
 
   private JCheckBox projectTaskCheckBox1;
-  
+
   private final DefaultBooleanOption myFixedWorkLoadEnabled =
-          new DefaultBooleanOption("taskProperties.workload.isfixed");
+    new DefaultBooleanOption("taskProperties.workload.isfixed");
   private final DefaultDoubleOption myWorkLoad = new DefaultDoubleOption("taskProperties.workload.value");
   private final GPOptionGroup myWorkLoadGroup =
-          new GPOptionGroup("task.workload", myFixedWorkLoadEnabled, myWorkLoad);
+    new GPOptionGroup("task.workload", myFixedWorkLoadEnabled, myWorkLoad);
 
   /** Shape chooser combo Box */
   private JPaintCombo shapeComboBox;
@@ -170,8 +171,7 @@ public class GanttTaskPropertiesBean extends JPanel {
   private JCheckBox myShowInTimeline;
   private AbstractAction myOnEarliestBeginToggle;
 
-  public GanttTaskPropertiesBean(GanttTask[] selectedTasks, IGanttProject project,
-          UIFacade uifacade) {
+  public GanttTaskPropertiesBean(GanttTask[] selectedTasks, IGanttProject project, UIFacade uifacade) {
     myTaskScheduleDates = new TaskScheduleDatesPanel(uifacade);
     this.selectedTasks = selectedTasks;
     storeOriginalValues(selectedTasks[0]);
@@ -208,10 +208,10 @@ public class GanttTaskPropertiesBean extends JPanel {
 
     constructEarliestBegin(propertiesPanel);
     addEmptyRow(propertiesPanel);
-    
+
     constructWorkLoad(propertiesPanel);
     addEmptyRow(propertiesPanel);
-    
+
     propertiesPanel.add(new JLabel(language.getText("priority")));
     priorityComboBox = new JComboBox();
     for (Task.Priority p : Task.Priority.values()) {
@@ -227,8 +227,7 @@ public class GanttTaskPropertiesBean extends JPanel {
 
     addEmptyRow(propertiesPanel);
 
-    propertiesPanel
-            .add(new JLabel(language.getText("option.taskProperties.load.calculated.label")));
+    propertiesPanel.add(new JLabel(language.getText("option.taskProperties.main.showInTimeline.label")));
     myShowInTimeline = new JCheckBox();
     propertiesPanel.add(myShowInTimeline);
 
@@ -236,17 +235,15 @@ public class GanttTaskPropertiesBean extends JPanel {
     shapeComboBox = new JPaintCombo(ShapeConstants.PATTERN_LIST);
     propertiesPanel.add(shapeComboBox);
 
-    OptionsPageBuilder builder = new OptionsPageBuilder(GanttTaskPropertiesBean.this,
-            OptionsPageBuilder.TWO_COLUMN_LAYOUT);
+    OptionsPageBuilder builder = new OptionsPageBuilder(GanttTaskPropertiesBean.this, OptionsPageBuilder.TWO_COLUMN_LAYOUT);
     builder.setUiFacade(myUIfacade);
     JPanel colorBox = new JPanel(new BorderLayout(5, 0));
-    colorBox.add(builder.createColorComponent(myTaskColorOption).getJComponent(),
-            BorderLayout.WEST);
-    // colorBox.add(Box.createHorizontalStrut(5));
+    colorBox.add(builder.createColorComponent(myTaskColorOption).getJComponent(), BorderLayout.WEST);
+    //colorBox.add(Box.createHorizontalStrut(5));
     colorBox.add(new JXHyperlink(mySetDefaultColorAction), BorderLayout.CENTER);
-    // colorBox.add(Box.createHorizontalGlue());
-    // colorBox.add(Box.createHorizontalGlue());
-    // colorBox.add(Box.createHorizontalGlue());
+    //colorBox.add(Box.createHorizontalGlue());
+    //colorBox.add(Box.createHorizontalGlue());
+    //colorBox.add(Box.createHorizontalGlue());
 
     propertiesPanel.add(new JLabel(language.getText("colors")));
     propertiesPanel.add(colorBox);
@@ -255,8 +252,7 @@ public class GanttTaskPropertiesBean extends JPanel {
     tfWebLink = new JTextField(20);
     weblinkBox.add(tfWebLink);
     weblinkBox.add(Box.createHorizontalStrut(2));
-    bWebLink =
-            new TestGanttRolloverButton(new ImageIcon(getClass().getResource("/icons/web_16.gif")));
+    bWebLink = new TestGanttRolloverButton(new ImageIcon(getClass().getResource("/icons/web_16.gif")));
     bWebLink.setToolTipText(GanttProject.getToolTip(language.getText("openWebLink")));
     weblinkBox.add(bWebLink);
 
@@ -265,8 +261,8 @@ public class GanttTaskPropertiesBean extends JPanel {
       public void actionPerformed(ActionEvent e) {
         // link to open the web link
         if (!BrowserControl.displayURL(tfWebLink.getText())) {
-          GanttDialogInfo gdi = new GanttDialogInfo(null, GanttDialogInfo.ERROR,
-                  GanttDialogInfo.YES_OPTION, language.getText("msg4"), language.getText("error"));
+          GanttDialogInfo gdi = new GanttDialogInfo(null, GanttDialogInfo.ERROR, GanttDialogInfo.YES_OPTION,
+              language.getText("msg4"), language.getText("error"));
           gdi.setVisible(true);
         }
       }
@@ -274,13 +270,12 @@ public class GanttTaskPropertiesBean extends JPanel {
     propertiesPanel.add(new JLabel(language.getText("webLink")));
     propertiesPanel.add(weblinkBox);
 
-    SpringUtilities.makeCompactGrid(propertiesPanel, propertiesPanel.getComponentCount() / 2, 2, 1,
-            1, 5, 5);
+    SpringUtilities.makeCompactGrid(propertiesPanel, propertiesPanel.getComponentCount() / 2, 2, 1, 1, 5, 5);
 
     JPanel propertiesWrapper = new JPanel(new BorderLayout());
     propertiesWrapper.add(propertiesPanel, BorderLayout.NORTH);
     generalPanel = new JPanel(new SpringLayout());
-    // generalPanel.add(new JLayer<JPanel>(propertiesPanel, layerUi));
+    //generalPanel.add(new JLayer<JPanel>(propertiesPanel, layerUi));
     generalPanel.add(propertiesWrapper);
     generalPanel.add(notesPanel);
     SpringUtilities.makeCompactGrid(generalPanel, 1, 2, 1, 1, 10, 5);
@@ -300,27 +295,25 @@ public class GanttTaskPropertiesBean extends JPanel {
     workLoadPanel.add(builder.createOptionComponent(myWorkLoadGroup, myFixedWorkLoadEnabled));
     workLoadPanel.add(builder.createOptionComponent(myWorkLoadGroup, myWorkLoad));
     OptionsPageBuilder.TWO_COLUMN_LAYOUT.layout(workLoadPanel, 1);
-    
+
     propertiesPanel.add(new JLabel(builder.getI18N().getOptionGroupLabel(myWorkLoadGroup)));
     propertiesPanel.add(workLoadPanel);
   }
 
   private void constructEarliestBegin(Container propertiesPanel) {
-    final JXHyperlink copyFromBeginDate =
-            new JXHyperlink(new GPAction("option.taskProperties.main.earliestBegin.copyBeginDate") {
-              @Override
-              public void actionPerformed(ActionEvent e) {
-                setThird(myTaskScheduleDates.getStart());
-              }
+    final JXHyperlink copyFromBeginDate = new JXHyperlink(new GPAction("option.taskProperties.main.earliestBegin.copyBeginDate") {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        setThird(myTaskScheduleDates.getStart());
+      }
 
-              @Override
-              protected String getLocalizedName() {
-                String fallbackLabel = String.format("%s %s", language.getText("copy"),
-                        language.getText("generic.startDate.label"));
-                return Objects.firstNonNull(super.getLocalizedName(), fallbackLabel);
-              }
+      @Override
+      protected String getLocalizedName() {
+        String fallbackLabel = String.format("%s %s", language.getText("copy"), language.getText("generic.startDate.label"));
+        return Objects.firstNonNull(super.getLocalizedName(), fallbackLabel);
+      }
 
-            });
+    });
     myEarliestBeginDatePicker = UIUtil.createDatePicker();
     Box valueBox = Box.createHorizontalBox();
     myOnEarliestBeginToggle = new AbstractAction() {
@@ -342,7 +335,7 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   private void constructCustomColumnPanel() {
     myCustomColumnPanel = new CustomColumnsPanel(myProject.getTaskCustomColumnManager(), myUIfacade,
-            selectedTasks[0].getCustomValues(), myUIfacade.getTaskTree().getVisibleFields());
+        selectedTasks[0].getCustomValues(), myUIfacade.getTaskTree().getVisibleFields());
   }
 
   /** Construct the predecessors tabbed pane */
@@ -354,8 +347,7 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   /** Construct the resources panel */
   private void constructResourcesPanel() {
-    myAllocationsPanel =
-            new TaskAllocationsPanel(selectedTasks[0], myHumanResourceManager, myRoleManager);
+    myAllocationsPanel = new TaskAllocationsPanel(selectedTasks[0], myHumanResourceManager, myRoleManager);
     resourcesPanel = myAllocationsPanel.getComponent();
   }
 
@@ -381,31 +373,30 @@ public class GanttTaskPropertiesBean extends JPanel {
     tabbedPane = new JTabbedPane() {
       @Override
       public void addTab(String title, Icon icon, Component component) {
-        super.addTab(title, icon, UIUtil.contentPaneBorder((JComponent) component));
+        super.addTab(title, icon, UIUtil.contentPaneBorder((JComponent)component));
       }
     };
     constructGeneralPanel();
 
-    tabbedPane.addTab(language.getText("general"),
-            new ImageIcon(getClass().getResource("/icons/properties_16.gif")), generalPanel);
+    tabbedPane.addTab(language.getText("general"), new ImageIcon(getClass().getResource("/icons/properties_16.gif")),
+        generalPanel);
 
     constructPredecessorsPanel();
-    tabbedPane.addTab(language.getText("predecessors"),
-            new ImageIcon(getClass().getResource("/icons/relashion.gif")), predecessorsPanel);
+    tabbedPane.addTab(language.getText("predecessors"), new ImageIcon(getClass().getResource("/icons/relashion.gif")),
+        predecessorsPanel);
 
     constructResourcesPanel();
 
-    tabbedPane.addTab(language.getCorrectedLabel("human"),
-            new ImageIcon(getClass().getResource("/icons/res_16.gif")), resourcesPanel);
+    tabbedPane.addTab(language.getCorrectedLabel("human"), new ImageIcon(getClass().getResource("/icons/res_16.gif")),
+        resourcesPanel);
 
     setLayout(new BorderLayout());
 
     add(tabbedPane, BorderLayout.CENTER);
 
     constructCustomColumnPanel();
-    tabbedPane.addTab(language.getText("customColumns"),
-            new ImageIcon(getClass().getResource("/icons/custom.gif")),
-            myCustomColumnPanel.getComponent());
+    tabbedPane.addTab(language.getText("customColumns"), new ImageIcon(getClass().getResource("/icons/custom.gif")),
+        myCustomColumnPanel.getComponent());
     tabbedPane.addFocusListener(new FocusAdapter() {
       private boolean isFirstFocusGain = true;
 
@@ -449,10 +440,9 @@ public class GanttTaskPropertiesBean extends JPanel {
       if (!originalEndDate.equals(getEnd())) {
         mutator.setEnd(getEnd());
       }
-      if (originalEarliestBeginDate == null && getThird() != null
-              || originalEarliestBeginDate != null && getThird() == null
-              || originalEarliestBeginDate != null && !originalEarliestBeginDate.equals(getThird())
-              || originalEarliestBeginEnabled != getThirdDateConstraint()) {
+      if (originalEarliestBeginDate == null && getThird() != null || originalEarliestBeginDate != null && getThird() == null
+          || originalEarliestBeginDate != null && !originalEarliestBeginDate.equals(getThird())
+          || originalEarliestBeginEnabled != getThirdDateConstraint()) {
         mutator.setThird(getThird(), getThirdDateConstraint());
       }
 
@@ -473,11 +463,10 @@ public class GanttTaskPropertiesBean extends JPanel {
         mutator.setPriority(getPriority());
       }
       mutator.setColor(myTaskColorOption.getValue());
-      if (this.originalShape == null && shapeComboBox.getSelectedIndex() != 0
-              || originalShape != null
-                      && !this.originalShape.equals(shapeComboBox.getSelectedPaint())) {
+      if (this.originalShape == null && shapeComboBox.getSelectedIndex() != 0 || originalShape != null
+          && !this.originalShape.equals(shapeComboBox.getSelectedPaint())) {
         mutator.setShape(new ShapePaint((ShapePaint) shapeComboBox.getSelectedPaint(), Color.white,
-                myTaskColorOption.getValue()));
+            myTaskColorOption.getValue()));
       }
 
       mutator.commit();
@@ -511,17 +500,14 @@ public class GanttTaskPropertiesBean extends JPanel {
     priorityComboBox.setSelectedIndex(originalPriority.ordinal());
 
     myTaskScheduleDates.setUnpluggedClone(myUnpluggedClone);
-    DateValidator validator = UIUtil.DateValidator.Default
-            .aroundProjectStart(myProject.getTaskManager().getProjectStart());
+    DateValidator validator = UIUtil.DateValidator.Default.aroundProjectStart(myProject.getTaskManager().getProjectStart());
     ActionListener listener = new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         setThird(CalendarFactory.createGanttCalendar(((JXDatePicker) e.getSource()).getDate()));
       }
     };
-    UIUtil.setupDatePicker(myEarliestBeginDatePicker,
-            originalEarliestBeginDate == null ? null : originalEarliestBeginDate.getTime(),
-            validator, listener);
+    UIUtil.setupDatePicker(myEarliestBeginDatePicker, originalEarliestBeginDate == null ? null : originalEarliestBeginDate.getTime(), validator, listener);
     myThird = originalEarliestBeginDate;
     myEarliestBeginEnabled.setSelected(originalEarliestBeginEnabled == 1);
     myOnEarliestBeginToggle.actionPerformed(null);
@@ -533,8 +519,7 @@ public class GanttTaskPropertiesBean extends JPanel {
     }
     myTaskScheduleDates.setMilestone(isMilestone());
 
-    boolean isSupertask =
-            myUnpluggedClone.getManager().getTaskHierarchy().hasNestedTasks(selectedTasks[0]);
+    boolean isSupertask = myUnpluggedClone.getManager().getTaskHierarchy().hasNestedTasks(selectedTasks[0]);
     myTaskScheduleDates.setSupertask(isSupertask);
 
     tfWebLink.setText(originalWebLink);
@@ -550,8 +535,7 @@ public class GanttTaskPropertiesBean extends JPanel {
 
     noteAreaNotes.setText(originalNotes);
     myTaskColorOption.setValue(selectedTasks[0].getColor());
-    myShowInTimeline.setSelected(
-            myUIfacade.getCurrentTaskView().getTimelineTasks().contains(selectedTasks[0]));
+    myShowInTimeline.setSelected(myUIfacade.getCurrentTaskView().getTimelineTasks().contains(selectedTasks[0]));
 
     myFixedWorkLoadEnabled.setValue(originalIsWorkLoadFixed);
     if (originalIsWorkLoadFixed) {
@@ -644,8 +628,7 @@ public class GanttTaskPropertiesBean extends JPanel {
     if (nestedTasks.length == 0) {
       return false;
     }
-    for (Task parent = taskHierarchy.getContainer(testedTask); parent != null; parent =
-            taskHierarchy.getContainer(parent)) {
+    for (Task parent = taskHierarchy.getContainer(testedTask); parent != null; parent = taskHierarchy.getContainer(parent)) {
       if (parent.isProjectTask()) {
         return false;
       }
@@ -671,8 +654,8 @@ public class GanttTaskPropertiesBean extends JPanel {
   }
 
   /**
-   * Creates a milestone, a project task or no checkbox depending on the selected
-   * task
+   * Creates a milestone, a project task or no checkbox depending on the
+   * selected task
    *
    * @return the created checkbox or null
    */

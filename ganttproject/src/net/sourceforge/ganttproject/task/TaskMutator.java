@@ -37,6 +37,6 @@ public interface TaskMutator extends MutableTask {
   int getCompletionPercentage();
 
   void setThird(GanttCalendar third, int thirdDateConstraint);
-  
-  void setFixedWorkLoad(double workLoad, boolean enabled);  
+
+  void setFixedWorkLoad(double workLoad, boolean enabled);
 }
