@@ -129,6 +129,8 @@ public interface Task extends MutableTask {
 
   int getCompletionPercentage();
 
+  int getCompletedLoadPercentage();
+
   ShapePaint getShape();
 
   /**
@@ -197,6 +199,8 @@ public interface Task extends MutableTask {
 
   public static interface Load {
     Double getValue();
+
+    Double getCompletedValue();
   }
 
   Load getLoad();

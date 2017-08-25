@@ -208,6 +208,12 @@ public class GanttCSVExport {
             case LOAD:
               writer.print(task.getLoad().getValue().toString());
               break;
+            case LOADCOMPLETION:
+              writer.print(String.valueOf(task.getCompletedLoadPercentage()));
+              break;
+            case COMPLETEDLOAD:
+              writer.print(task.getLoad().getCompletedValue().toString());
+              break;
             case INFO:
             case PRIORITY:
             case TYPE:
@@ -292,6 +298,9 @@ public class GanttCSVExport {
               break;
             case TOTAL_LOAD:
               writer.print(String.valueOf(p.getTotalLoad()));
+              break;
+            case TOTAL_LOAD_COMPLETED:
+              writer.print(String.valueOf(p.getTotalLoadCompleted()));
               break;
           }
         }

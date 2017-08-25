@@ -144,6 +144,8 @@ public class XmlSerializer extends SaverBase {
     addAttribute("notes", i18n("notes"), attrs);
     addAttribute("duration", i18n("duration"), attrs);
     addAttribute("load", i18n("load"), attrs);
+    addAttribute("completedload", i18n("completedload"), attrs);
+    addAttribute("loadcompletion", i18n("loadcompletion"), attrs);
     startPrefixedElement("tasks", attrs, handler);
     TaskVisitor visitor = new TaskVisitor() {
       AttributesImpl myAttrs = new AttributesImpl();
@@ -175,6 +177,12 @@ public class XmlSerializer extends SaverBase {
 
         addAttribute("id", "tpd14", myAttrs);
         textElement("load", myAttrs, String.valueOf(t.getLoad().getValue()), handler);
+
+        addAttribute("id", "tpd15", myAttrs);
+        textElement("completedload", myAttrs, String.valueOf(t.getLoad().getCompletedValue()), handler);
+
+        addAttribute("id", "tpd16", myAttrs);
+        textElement("loadcompletion", myAttrs, String.valueOf(t.getCompletedLoadPercentage()), handler);
 
         final List<Document> attachments = t.getAttachments();
         for (int i = 0; i < attachments.size(); i++) {
@@ -260,6 +268,7 @@ public class XmlSerializer extends SaverBase {
     addAttribute("rate", i18n("colStandardRate"), attrs);
     addAttribute("totalCost", i18n("colTotalCost"), attrs);
     addAttribute("totalLoad", i18n("colTotalLoad"), attrs);
+    addAttribute("totalLoadCompleted", i18n("colTotalLoadCompleted"), attrs);
     startPrefixedElement("resources", attrs, handler);
     {
       List<HumanResource> resources = resourceManager.getResources();
@@ -284,6 +293,8 @@ public class XmlSerializer extends SaverBase {
         textElement("totalCost", attrs, p.getTotalCost().toPlainString(), handler);
         addAttribute("id", "7", attrs);
         textElement("totalLoad", attrs, String.valueOf(p.getTotalLoad()), handler);
+        addAttribute("id", "8", attrs);
+        textElement("totalLoadCompleted", attrs, String.valueOf(p.getTotalLoadCompleted()), handler);
 
         List<CustomProperty> customFields = p.getCustomProperties();
         for (int j = 0; j < customFields.size(); j++) {

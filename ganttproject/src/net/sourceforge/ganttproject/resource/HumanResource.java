@@ -312,6 +312,15 @@ public class HumanResource implements CustomPropertyHolder {
     return totalLoad;
   }
 
+  public double getTotalLoadCompleted() {
+    double totalLoad = 0.0;
+    for (ResourceAssignment assignment : myAssignments) {
+      Task t = assignment.getTask();
+      totalLoad = totalLoad + assignment.getLoad() * t.getDuration().getLength() * t.getCompletionPercentage() / 100.0 / 100.0;
+    }
+    return totalLoad;
+  }
+
   public BigDecimal getTotalCost() {
     BigDecimal cost = BigDecimal.ZERO;
     for (ResourceAssignment assignment : myAssignments) {

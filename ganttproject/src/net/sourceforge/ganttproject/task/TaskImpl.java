@@ -457,6 +457,12 @@ public class TaskImpl implements Task {
   }
 
   @Override
+  public int getCompletedLoadPercentage() {
+    double total = myLoad.getValue();
+    return (total > 0) ? (int)(myLoad.getCompletedValue() / total * 100) : 0;
+  }
+
+  @Override
   public boolean getExpand() {
     return bExpand;
   }
@@ -1330,6 +1336,10 @@ public class TaskImpl implements Task {
       return new LoadAlgorithmImpl().getCalculatedLoad(TaskImpl.this);
     }
 
+    @Override
+    public Double getCompletedValue() {
+      return new LoadAlgorithmImpl().getCalculatedCompletedLoad(TaskImpl.this);
+    }
   }
 
   @Override

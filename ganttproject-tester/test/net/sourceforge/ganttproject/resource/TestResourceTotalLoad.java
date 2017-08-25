@@ -53,4 +53,34 @@ public class TestResourceTotalLoad extends TaskTestCase {
     assertEquals(5.0, joe.getTotalLoad());
   }
 
+  public void testResourceTotalLoadCompleted() {
+    TaskManagerBuilder builder = TestSetupHelper.newTaskManagerBuilder();
+    setTaskManager(builder.build());
+    HumanResource joe = new HumanResource("Joe", 1, builder.getResourceManager());
+
+    assertEquals(0.0, joe.getTotalLoadCompleted());
+
+    builder.getResourceManager().add(joe);
+
+    Task t = createTask();
+    t.setDuration(t.getManager().createLength(2));
+    t.setCompletionPercentage(100);
+    t.getAssignmentCollection().addAssignment(joe).setLoad(100f);
+    // two days at 100% load
+    assertEquals(2.0, joe.getTotalLoadCompleted());
+
+    t = createTask();
+    t.setDuration(t.getManager().createLength(4));
+    t.setCompletionPercentage(50);
+    t.getAssignmentCollection().addAssignment(joe).setLoad(75f);
+    // add another 4 days at 75% load
+    assertEquals(3.5, joe.getTotalLoadCompleted());
+
+    t = createTask();
+    t.setDuration(t.getManager().createLength(10));
+    t.setCompletionPercentage(0);
+    t.getAssignmentCollection().addAssignment(joe).setLoad(0f);
+    // add another 10 days at 0% load
+    assertEquals(3.5, joe.getTotalLoadCompleted());
+  }
 }

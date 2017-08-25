@@ -65,6 +65,8 @@ public class PropertyFetcher {
     id2value.put(TaskDefaultColumn.ID.getStub().getID(), String.valueOf(t.getTaskID()));
     id2value.put(TaskDefaultColumn.COST.getStub().getID(), t.getCost().getValue().toPlainString());
     id2value.put(TaskDefaultColumn.LOAD.getStub().getID(), t.getLoad().getValue().toString());
+    id2value.put(TaskDefaultColumn.COMPLETEDLOAD.getStub().getID(), t.getLoad().getCompletedValue().toString());
+    id2value.put(TaskDefaultColumn.LOADCOMPLETION.getStub().getID(), String.valueOf(t.getCompletedLoadPercentage()));
 
     CustomColumnsValues customValues = t.getCustomValues();
     for (CustomPropertyDefinition def : myProject.getTaskCustomColumnManager().getDefinitions()) {
@@ -82,6 +84,7 @@ public class PropertyFetcher {
     id2value.put(ResourceDefaultColumn.STANDARD_RATE.getStub().getID(), hr.getStandardPayRate().toPlainString());
     id2value.put(ResourceDefaultColumn.TOTAL_COST.getStub().getID(), hr.getTotalCost().toPlainString());
     id2value.put(ResourceDefaultColumn.TOTAL_LOAD.getStub().getID(), String.valueOf(hr.getTotalLoad()));
+    id2value.put(ResourceDefaultColumn.TOTAL_LOAD_COMPLETED.getStub().getID(), String.valueOf(hr.getTotalLoadCompleted()));
 
     List<CustomProperty> customFields = hr.getCustomProperties();
     for (CustomProperty property : customFields) {

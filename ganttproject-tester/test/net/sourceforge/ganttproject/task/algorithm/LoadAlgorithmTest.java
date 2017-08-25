@@ -18,6 +18,8 @@ along with GanttProject.  If not, see <http://www.gnu.org/licenses/>.
 */
 package net.sourceforge.ganttproject.task.algorithm;
 
+import biz.ganttproject.core.time.CalendarFactory;
+import biz.ganttproject.core.time.GanttCalendar;
 import net.sourceforge.ganttproject.TestSetupHelper;
 import net.sourceforge.ganttproject.TestSetupHelper.TaskManagerBuilder;
 import net.sourceforge.ganttproject.resource.HumanResource;
@@ -48,9 +50,13 @@ public class LoadAlgorithmTest extends TaskTestCase {
     builder.getResourceManager().add(joe);
     builder.getResourceManager().add(jane);
 
+    subtask1.setStart(CalendarFactory.createGanttCalendar(2000, 01, 1));
     subtask1.setDuration(subtask1.getManager().createLength(5));
+    subtask2.setStart(CalendarFactory.createGanttCalendar(2000, 01, 10));
     subtask2.setDuration(subtask1.getManager().createLength(10));
+
     assertEquals(0.0, supertask.getLoad().getValue());
+    assertEquals(0.0, supertask.getLoad().getCompletedValue());
 
     subtask1.getAssignmentCollection().addAssignment(joe).setLoad(100f);
     subtask1.getAssignmentCollection().addAssignment(jane).setLoad(50f);
@@ -58,11 +64,26 @@ public class LoadAlgorithmTest extends TaskTestCase {
     assertEquals(7.5, subtask1.getLoad().getValue());
     assertEquals(0.0, subtask2.getLoad().getValue());
 
+    assertEquals(0.0, supertask.getLoad().getCompletedValue());
+    assertEquals(0.0, subtask1.getLoad().getCompletedValue());
+    assertEquals(0.0, subtask2.getLoad().getCompletedValue());
+
     subtask2.getAssignmentCollection().addAssignment(jane).setLoad(50f);
     assertEquals(12.5, supertask.getLoad().getValue());
     assertEquals(7.5, subtask1.getLoad().getValue());
     assertEquals(5.0, subtask2.getLoad().getValue());
-  }
+
+    assertEquals(0.0, supertask.getLoad().getCompletedValue());
+    assertEquals(0.0, subtask1.getLoad().getCompletedValue());
+    assertEquals(0.0, subtask2.getLoad().getCompletedValue());
+
+    subtask1.setCompletionPercentage(20);
+    subtask2.setCompletionPercentage(50);
+
+    assertEquals(1.5, subtask1.getLoad().getCompletedValue());
+    assertEquals(2.5, subtask2.getLoad().getCompletedValue());
+    assertEquals(4.0, supertask.getLoad().getCompletedValue());
+}
 
   public void testTaskLoad() {
     TaskManagerBuilder builder = TestSetupHelper.newTaskManagerBuilder();
@@ -77,10 +98,15 @@ public class LoadAlgorithmTest extends TaskTestCase {
     Task t = createTask();
     t.setDuration(t.getManager().createLength(2));
     assertEquals(0.0, t.getLoad().getValue());
+    assertEquals(0.0, t.getLoad().getCompletedValue());
 
     t.getAssignmentCollection().addAssignment(joe).setLoad(100f);
     t.getAssignmentCollection().addAssignment(jane).setLoad(50f);
     assertEquals(3.0, t.getLoad().getValue());
-  }
+    assertEquals(0.0, t.getLoad().getCompletedValue());
+
+    t.setCompletionPercentage(100);
+    assertEquals(3.0, t.getLoad().getCompletedValue());
+}
 
 }

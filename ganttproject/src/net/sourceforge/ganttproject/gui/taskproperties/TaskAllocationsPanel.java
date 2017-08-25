@@ -131,7 +131,9 @@ public class TaskAllocationsPanel {
     JPanel optionsPanel = new JPanel();
     optionsPanel.add(new JLabel(GanttLanguage.getInstance().getText("option.taskProperties.load.value.label")));
     optionsPanel.add(new JLabel(myTask.getLoad().getValue().toString()));
-    OptionsPageBuilder.TWO_COLUMN_LAYOUT.layout(optionsPanel, 1);
+    optionsPanel.add(new JLabel(GanttLanguage.getInstance().getText("option.taskProperties.load.completed.label")));
+    optionsPanel.add(new JLabel(String.valueOf(myTask.getLoad().getCompletedValue())));
+    OptionsPageBuilder.TWO_COLUMN_LAYOUT.layout(optionsPanel, 2);
 
     UIUtil.createTitle(optionsPanel, builder.getI18N().getOptionGroupLabel(myLoadGroup));
 

@@ -82,6 +82,7 @@ public class ResourceNode extends ResourceTableNode {
     case STANDARD_RATE: return getResource().getStandardPayRate();
     case TOTAL_COST: return getResource().getTotalCost();
     case TOTAL_LOAD: return getResource().getTotalLoad();
+    case TOTAL_LOAD_COMPLETED: return getResource().getTotalLoadCompleted();
     default: return "";
     }
   }

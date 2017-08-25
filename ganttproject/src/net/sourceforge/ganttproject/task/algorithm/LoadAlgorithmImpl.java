@@ -41,4 +41,18 @@ public class LoadAlgorithmImpl {
     }
     return total;
   }
+
+  public Double getCalculatedCompletedLoad(Task t) {
+    Double total = new Double(0.0);
+    TaskContainmentHierarchyFacade taskHierarchy = t.getManager().getTaskHierarchy();
+    if (taskHierarchy.hasNestedTasks(t)) {
+      for (Task child : taskHierarchy.getNestedTasks(t)) {
+        total = total + child.getLoad().getCompletedValue();
+      }
+    }
+    for (ResourceAssignment assignment : t.getAssignments()) {
+      total = total + (assignment.getLoad() * t.getDuration().getLength() / 100.0) * t.getCompletionPercentage() / 100.0;
+    }
+    return total;
+  }
 }
