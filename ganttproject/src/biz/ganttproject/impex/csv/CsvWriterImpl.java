@@ -53,4 +53,10 @@ public class CsvWriterImpl implements SpreadsheetWriter {
     myCsvPrinter.flush();
     myCsvPrinter.close();
   }
+
+  @Override
+  public void newPage() throws IOException {
+    println();
+    println();
+  }
 }

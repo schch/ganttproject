@@ -121,8 +121,7 @@ public class GanttCSVExport {
     writeTasks(writer);
 
     if (myHumanResourceManager.getResources().size() > 0) {
-      writer.println();
-      writer.println();
+      writer.newPage();
       writeResources(writer);
     }
   }

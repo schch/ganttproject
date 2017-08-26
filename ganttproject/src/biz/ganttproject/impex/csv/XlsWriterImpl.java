@@ -34,7 +34,7 @@ import java.io.OutputStream;
  */
 public class XlsWriterImpl implements SpreadsheetWriter {
   private final Workbook myWorkbook;
-  private final Sheet mySheet;
+  private Sheet mySheet;
   private final OutputStream myStream;
 
 
@@ -76,5 +76,13 @@ public class XlsWriterImpl implements SpreadsheetWriter {
 
   private void createNewRow() {
     myCurrentRow = mySheet.createRow(myNextRowInd++);
+  }
+
+  @Override
+  public void newPage() throws IOException {
+    mySheet = myWorkbook.createSheet();
+    myNextRowInd = 0;
+    myCurrentRow = null;
+    myNextCellInd = 0;
   }
 }

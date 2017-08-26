@@ -28,5 +28,7 @@ public interface SpreadsheetWriter extends AutoCloseable {
   void print(String value) throws IOException;
 
   void println() throws IOException;
+  
+  void newPage() throws IOException;
 
 }
